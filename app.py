@@ -3,6 +3,7 @@ import os
 import gevent
 import redis
 import json
+from markdown import markdown as md
 from flask import views
 from db import Photo
 
@@ -24,6 +25,11 @@ def event_stream(item_id=None):
 
 
 api = flask.Blueprint('api',__name__,url_prefix='/api/v1')
+
+def api_index():
+    return flask.make_response(md(open('README.md','r').read()))
+
+api.add_url_rule('/','index',view_func=api_index)
 
 class UploadView(views.MethodView):
     def post(self):
