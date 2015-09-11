@@ -33,7 +33,7 @@ api.add_url_rule('/','index',view_func=api_index)
 
 class UploadView(views.MethodView):
     def post(self):
-        data = dict(flask.request.form.items())
+        data = json.loads(flask.request.data) if flask.request.data else dict(flask.request.form.items())
         user_id = data.get('user_id',None)
         group_id = data.get('group_id',None)
         image_url = data.get('image_url',None)
